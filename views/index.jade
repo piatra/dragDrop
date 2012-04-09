@@ -1,0 +1,15 @@
+!!! 5
+html
+head
+	title DragAndDrop in Nodejs
+	link(rel='stylesheet', href='/stylesheets/style.css')
+body
+	div(id='container')
+		p(id='message')
+			| Drop files anywhere in here
+		ul
+			- content.forEach(function(item){
+				li!= item
+			- })
+
+script(src="/js/script.js")
