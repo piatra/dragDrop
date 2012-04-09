@@ -29,10 +29,10 @@ app.post('/upload', function(req, res){
 		form.parse(req, function(err, fields, files) {
 			for(var i in files) {
 				console.log(files[i]);
-				fs.rename(files[i].path, "/opt/apps/dropbox/static/upload/" + files[i].name, function(err) {
+				fs.rename(files[i].path, __dirname + "/static/upload/" + files[i].name, function(err) {
 					if (err) {
-						fs.unlink("/opt/apps/dropbox/static/upload/" + files[i].name);
-						fs.rename(files[i].path, "/opt/apps/dropbox/static/upload/" + files[i].name);
+						fs.unlink(__dirname + "/static/upload/" + files[i].name);
+						fs.rename(files[i].path, __dirname "/static/upload/" + files[i].name);
 					}
 				});
 			}

@@ -1,0 +1,16 @@
+{
+  "author": "Andrei Oprea",
+  "name": "dragDrop",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/piatra/dragDrop.git"
+  },
+  "dependencies": {
+    "express":"*",
+    "jade":"*"
+    },
+  "engines": {
+    "node": "*"
+  }
+}
