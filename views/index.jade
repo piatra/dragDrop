@@ -7,9 +7,11 @@ body
 	div(id='container')
 		p(id='message')
 			| Drop files anywhere in here
-		ul
+		ul(id='itemlist')
 			- content.forEach(function(item){
-				li!= item
+				li
+					a(href='/upload/' + item.name)= item.name
+					span(class='item-size')= item.size + ' kb'
 			- })
 
 script(src="/js/script.js")

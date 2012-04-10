@@ -11,12 +11,16 @@ app.configure(function(){
 });
 
 app.get('/', function(req, res){
-	child = exec('ls ./static/upload', function(err, stdout, stderr){
+	child = exec('ls -s ./static/upload', function(err, stdout, stderr){
 		stdout = stdout.split('\n');
-		console.log(stdout);
 		var content = [];
-		for(var i in stdout) {
-			content.push('<a href="/upload/'+stdout[i]+'">'+ stdout[i] +'</a><br>');
+		var item;
+		for(var i = 1; i < stdout.length - 1; ++i) {
+				item = stdout[i].trim().split(' ');
+				content.push({
+					'name' : item[item.length-1],
+					'size' : item[0]
+				});
 		}
 		res.render('index',{
 			content: content
@@ -32,7 +36,7 @@ app.post('/upload', function(req, res){
 				fs.rename(files[i].path, __dirname + "/static/upload/" + files[i].name, function(err) {
 					if (err) {
 						fs.unlink(__dirname + "/static/upload/" + files[i].name);
-						fs.rename(files[i].path, __dirname "/static/upload/" + files[i].name);
+						fs.rename(files[i].path, __dirname + "/static/upload/" + files[i].name);
 					}
 				});
 			}
@@ -41,4 +45,5 @@ app.post('/upload', function(req, res){
 	res.send('Uploaded complete!');
 });
 
-app.listen(3000);
+console.log('server started on port 8000');
+app.listen(8000);

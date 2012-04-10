@@ -9,6 +9,7 @@ body {
 #container {
 	width:920px;
 	margin:0 auto;
+	min-height:500px;
 }
 
 #droparea {
@@ -37,10 +38,16 @@ body {
 	text-align:center;
 }
 
+#message.alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #468847;
+}
+
 ul li {
 	list-style:none;
 	border-bottom:1px solid #bce8f1;
-	padding:10px;
+	position:relative;
 }
 
 	ul li:hover {
@@ -50,6 +57,8 @@ ul li {
 	ul li a {
 		text-decoration:none;
 		margin-left:5px;
+		padding:10px;
+		display:block;
 		color:#333;
 		font-size:16px;
 	}
@@ -61,4 +70,11 @@ ul li {
 			height:24px;
 			background:url(../img/file.png);
 			margin:-3px 0;
+		}
+
+		ul li span {
+			position:absolute;
+			top:10px;
+			right:10px;
+			color:#bbb;
 		}
