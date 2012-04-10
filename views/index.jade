@@ -1,17 +1,21 @@
 !!! 5
 html
-head
-	title DragAndDrop in Nodejs
-	link(rel='stylesheet', href='/stylesheets/style.css')
-body
-	div(id='container')
-		p(id='message')
-			| Drop files anywhere in here
-		ul(id='itemlist')
-			- content.forEach(function(item){
-				li
-					a(href='/upload/' + item.name)= item.name
-					span(class='item-size')= item.size + ' kb'
-			- })
+	head
+		title DragAndDrop in Nodejs
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		div(id='container')
+			p(id='message')
+				| Drop files anywhere in here
+			ul(id='itemlist')
+				- if(content.length)
+					- content.forEach(function(item){
+						li
+							a(href='/upload/' + item.name)= item.name
+							span(class='item-size')= item.size + ' kb'
+					- })
+				- else {
+					h3 No files added yet, drop them here
+				- }
 
-script(src="/js/script.js")
+	script(src="/js/script.js")

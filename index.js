@@ -1,8 +1,8 @@
 var formidable = require('formidable'),
-		fs = require('fs'),
-		express = require('express'),
-		app = express.createServer(),
-		exec = require('child_process').exec;
+	fs = require('fs'),
+	express = require('express'),
+	app = express.createServer().listen(process.env.PORT || 8000),
+	exec = require('child_process').exec;
 
 app.configure(function(){
 	app.use(express.static(__dirname + '/static'));
@@ -45,5 +45,4 @@ app.post('/upload', function(req, res){
 	res.send('Uploaded complete!');
 });
 
-console.log('server started on port 8000');
-app.listen(8000);
+console.log("Listening on port %d", app.address().port);

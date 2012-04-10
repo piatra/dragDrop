@@ -5,7 +5,7 @@ var itemlist = document.getElementById('itemlist');
 droparea.ondragover = function() {
 	var _class = this.className;
 	if(_class.trim() != 'hover' ) this.className += 'hover';
-	else this.innerHTML = 'Drop files anywhere in here';
+	else output.innerHTML = 'Drop files anywhere in here';
 	output.className = '';
 }
 
@@ -42,7 +42,7 @@ droparea.ondrop = function(e) {
 }
 
 var appendItems = function(files) {
-	var content,
+	var content = '',
 		item;
 	for (var i = 0; i < files.length; i++) {
 		item = files[i];
