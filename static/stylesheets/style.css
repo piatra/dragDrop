@@ -58,6 +58,24 @@ ul li {
 	position:relative;
 }
 
+	ul li.new {
+		-webkit-animation: fade 5s;
+		-webkit-animation-fill-mode:forwards;
+		-moz-animation: fade 5s;
+		-moz-animation-fill-mode:forwards;
+		animation: fade 5s;
+		animation-fill-mode:forwards;
+	}
+
+@-webkit-keyframes fade {
+	from {
+		background:#d9edf7;
+	}
+	to {
+		background: transparent;
+	}
+}
+
 	ul li:last-child {
 		border-bottom:0;
 	}

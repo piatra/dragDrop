@@ -2,7 +2,11 @@ var formidable = require('formidable'),
 	fs = require('fs'),
 	express = require('express'),
 	app = express.createServer().listen(process.env.PORT || 8000),
-	exec = require('child_process').exec;
+	exec = require('child_process').exec,
+	filelist = {
+		'timestamp' : 0,
+		'files' : []
+	};
 
 app.configure(function(){
 	app.use(express.static(__dirname + '/static'));
@@ -29,10 +33,12 @@ app.get('/', function(req, res){
 })
 
 app.post('/upload', function(req, res){
+	filelist.files = [];
 	var form = new formidable.IncomingForm();
 		form.parse(req, function(err, fields, files) {
 			for(var i in files) {
-				console.log(files[i]);
+				filelist.files.push("/upload/" + files[i].name);
+				filelist.timestamp = (new Date()).toLocaleTimeString();
 				fs.rename(files[i].path, __dirname + "/static/upload/" + files[i].name, function(err) {
 					if (err) {
 						fs.unlink(__dirname + "/static/upload/" + files[i].name);
@@ -42,7 +48,32 @@ app.post('/upload', function(req, res){
 			}
 			
 		});
-	res.send('Uploaded complete!');
 });
+
+app.get('/update', function(req, res){
+	if (req.headers.accept && req.headers.accept == 'text/event-stream') {
+		res.writeHead(200, {
+			'Content-Type': 'text/event-stream',
+			'Cache-Control': 'no-cache',
+			'Connection': 'keep-alive'
+		});
+		sendSSE(req, res);
+	}
+});
+
+function sendSSE(req, res) {
+	var id = (new Date()).toLocaleTimeString();
+	constructSSE(res, id);
+}
+
+function constructSSE(res, id) {
+		if(filelist.files.length) {
+			res.write('id: ' + id + '\n');
+			res.write('data: ' + JSON.stringify(filelist) + '\n\n');
+		}
+		setTimeout(function() {
+			constructSSE(res, id);
+		}, 5000);
+}
 
 console.log("Listening on port %d", app.address().port);
