@@ -110,3 +110,14 @@ ul li {
 			right:10px;
 			color:#bbb;
 		}
+
+#dropContainer {
+	width: 100%;
+	overflow:hidden;
+	border:1px dotted #ddd;
+}
+
+input[type=file] {
+	width: 50%;height: 300px;
+	margin-top:-240px;
+}

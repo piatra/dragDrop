@@ -1,25 +1,11 @@
-var droparea = document.getElementById("container");
 var output = document.getElementById('message');
 var itemlist = document.getElementById('itemlist');
 var timestamp=0;
 
-droparea.ondragover = function() {
-	var _class = this.className;
-	if(_class.trim() != 'hover' ) this.className += 'hover';
-	else output.innerHTML = 'Drop files anywhere in here';
-	output.className = '';
-}
-
-droparea.ondragend = function() {
-	// nothing to do here
-}
-
-droparea.ondrop = function(e) {
-	e.preventDefault();
-	this.className = '';
-
-	var files = event.dataTransfer.files;
-	var formData = new FormData();
+document.getElementById('dropTarget').addEventListener("change", function (e) {
+	output.innerHTML = "";
+	var files = e.target.files
+		, formData = new FormData();
 
 	for (var i = 0; i < files.length; i++) {
 		formData.append('file' + i, files[i]);
@@ -34,12 +20,11 @@ droparea.ondrop = function(e) {
 		} else {
 			output.innerHTML = "Error " + oXHR.status + " occurred uploading your file.<br \/>";
 		}
-	};
+	}
 
-	oXHR.send(formData);
-	
-	return false;
-}
+	oXHR.send(formData)
+
+}, false);
 
 var appendItems = function(file) {
 	var content = '';
@@ -61,8 +46,6 @@ if (!!window.EventSource) {
 		var data = JSON.parse(e.data);
 		if(timestamp == data.timestamp) return;
 		else {
-			console.log(timestamp);
-			console.log(data.timestamp);
 			appendItems(data.files);
 			timestamp = data.timestamp;
 		}

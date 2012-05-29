@@ -33,21 +33,29 @@ app.get('/', function(req, res){
 })
 
 app.post('/upload', function(req, res){
-	filelist.files = [];
-	var form = new formidable.IncomingForm();
-		form.parse(req, function(err, fields, files) {
-			for(var i in files) {
-				filelist.files.push("/upload/" + files[i].name);
-				filelist.timestamp = (new Date()).toLocaleTimeString();
-				fs.rename(files[i].path, __dirname + "/static/upload/" + files[i].name, function(err) {
-					if (err) {
-						fs.unlink(__dirname + "/static/upload/" + files[i].name);
-						fs.rename(files[i].path, __dirname + "/static/upload/" + files[i].name);
-					}
-				});
-			}
-			
-		});
+	var form = new formidable.IncomingForm()
+
+	form.parse(req, function(err, fields, files){
+		if(files['file0'].name.split('/').length > 1) {
+			var directory = files['file0'].name.split('/')[0];
+			fs.mkdir(__dirname + '/static/upload/' + directory, 0777, function (err) {
+				if(err) console.log('Folder could not be created ' + err)
+			})
+		}
+		for(var i in files) {
+			filelist.files.push("/upload/" + files[i].name);
+			console.log(files[i].name);
+			filelist.timestamp = (new Date()).toLocaleTimeString();
+			fs.rename(files[i].path, __dirname + "/static/upload/" + files[i].name, function(err) {
+				if (err) {
+					
+					fs.unlink(__dirname + "/static/upload/" + files[i].name);
+					fs.rename(files[i].path, __dirname + "/static/upload/" + files[i].name);
+					
+				}
+			});
+		}
+	})
 });
 
 app.get('/update', function(req, res){

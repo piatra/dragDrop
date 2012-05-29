@@ -5,8 +5,10 @@ html
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
 		div(id='container')
-			p(id='message')
-				| Drop files anywhere in here
+			div(id="dropContainer")
+				p(id='message')
+					| Drop files anywhere in here
+				input(type="file",multiple, webkitdirectory, id="dropFolders")
 			ul(id='itemlist')
 				- if(content.length)
 					- content.forEach(function(item){
