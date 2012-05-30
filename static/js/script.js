@@ -2,15 +2,54 @@ var output = document.getElementById('message');
 var itemlist = document.getElementById('itemlist');
 var timestamp=0;
 
-document.getElementById('dropTarget').addEventListener("change", function (e) {
-	output.innerHTML = "";
+dropbox = document.getElementById("dropFiles");  
+dropbox.addEventListener("dragenter", dragenter, false);  
+dropbox.addEventListener("dragover", dragover, false);  
+dropbox.addEventListener("drop", drop, false);  
+
+function dragenter(e) {
+  e.stopPropagation();
+  e.preventDefault();
+  
+}
+
+function dragover(e) {
+  e.stopPropagation();
+  e.preventDefault();
+
+}
+
+function drop(e) {
+	e.stopPropagation();  
+	e.preventDefault();  
+
+	var dt = e.dataTransfer
+	, files = dt.files
+	, formData = new FormData()
+	formData.append('file0', files[0]);
+
+	sendFiles(formData)
+
+}
+
+document.getElementById('dropFolders').addEventListener("change", function (e) {
+
+	e.stopPropagation();
+  	e.preventDefault();
+
 	var files = e.target.files
-		, formData = new FormData();
+	, formData = new FormData()
+	, dropfiles = e.dataTransfer
 
 	for (var i = 0; i < files.length; i++) {
 		formData.append('file' + i, files[i]);
 	}
 
+	sendFiles(formData);
+
+}, false);
+
+var sendFiles = function(formData) {
 	var oXHR = new XMLHttpRequest();
 	oXHR.open("POST", "/upload", true);
 	oXHR.onload = function(oEvent) {
@@ -23,8 +62,7 @@ document.getElementById('dropTarget').addEventListener("change", function (e) {
 	}
 
 	oXHR.send(formData)
-
-}, false);
+}
 
 var appendItems = function(file) {
 	var content = '';

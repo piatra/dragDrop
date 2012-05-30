@@ -5,9 +5,12 @@ html
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
 		div(id='container')
-			div(id="dropContainer")
-				p(id='message')
-					| Drop files anywhere in here
+			p(id='message')
+				Drop files/folders
+			div(class="drop", id="dropFiles")
+				p Drop files
+			div(class="drop", id="dropFolders")
+				p Drop folders
 				input(type="file",multiple, webkitdirectory, id="dropFolders")
 			ul(id='itemlist')
 				- if(content.length)
