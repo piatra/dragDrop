@@ -1,6 +1,4 @@
-Drag and drop upload using awesome stuff like multiple file selection, pseudo-drop-areas and nodejs
+Drag and drop upload
 ==============
-Only works for for dropping folders, I'm trying to solve the whole mess of creating folders recursively
-TODO: Single file uploads
-TODO: update on new files with server sent events (kinda works but its buggy)
+Using awesome stuff like multiple file selection, pseudo-drop-areas and nodejs
 
