@@ -69,23 +69,27 @@ var appendItems = function(file) {
 	if(file.length>1) {
 		for (var i = 0; i < file.length; i++) {
 			var item = file[i].split('/');
-			content += '<li class="new"><a href=/upload/' + file[i] + '>' + item[item.length-1] + '</a></li>';
-		};
+			if(!checkForFile(item[item.length-1]))
+				content += '<li class="new"><a href=/upload/' + file[i] + '>'+ item[item.length-1] +'</a></li>';
+		}
 	} else {
 		var item = file[0].split('/');
-		content += '<li class="new"><a href=/upload/' + file + '>' + item[item.length-1] + '</a></li>';
+		content += '<li class="new"><a href=/upload/' + file + '></a></li>';
 	}
 	itemlist.innerHTML += content;
+}
+
+var checkForFile = function(filename) {
+	var li = document.getElementsByTagName('li')
+	for (var i = 0; i < li.length; i++)
+		if(li[i].textContent === filename) return 1
+	return 0
 }
 
 if (!!window.EventSource) {
 	var source = new EventSource('/update');
 	source.onmessage = function(e) {
 		var data = JSON.parse(e.data);
-		if(timestamp == data.timestamp) return;
-		else {
-			appendItems(data.files);
-			timestamp = data.timestamp;
-		}
+		appendItems(data.files);
 	}
 }

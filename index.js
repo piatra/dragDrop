@@ -70,7 +70,7 @@ app.get('/update', function(req, res){
 });
 
 function sendSSE(req, res) {
-	var id = (new Date()).toLocaleTimeString();
+	var id = (new Date()).toLocaleTimsheString();
 	constructSSE(res, id);
 }
 
